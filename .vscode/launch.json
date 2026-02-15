@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:ddg-base}",
+            "name": "Debug ddg-base",
+            "target": "ddg-base",
+            "configuration": "debug",
+            "preLaunchTask": "swift: Build Debug ddg-base"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:ddg-base}",
+            "name": "Release ddg-base",
+            "target": "ddg-base",
+            "configuration": "release",
+            "preLaunchTask": "swift: Build Release ddg-base"
+        }
+    ]
+}
