@@ -1,5 +1,9 @@
 import Foundation
 
+protocol Player {
+    
+}
+
 enum Suit: String, CaseIterable {
     case spades = "♠️", hearts = "♥️", diamonds = "♦️", clubs = "♣️"
 }
@@ -21,15 +25,17 @@ enum Rank: Int, CaseIterable {
 
 enum Card: CustomStringConvertible {
     case standard(rank: Rank, suit: Suit)
-    case joker
+    case jokerBig
+    case jokerSmall
     
     // Conforming to CustomStringConvertible makes printing easy
     var description: String {
         switch self {
         case .standard(let rank, let suit):
             return "\(rank.displayValue)\(suit.rawValue)"
-        case .joker:
-            return "🃏 Joker"
+        case .jokerBig:
+            return "🃏Big Joker"
+            case .jokerSmall: return "🃏 Small Joker"
         }
     }
 }
