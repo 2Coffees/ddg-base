@@ -1,8 +1,8 @@
 import Foundation
 
 final class Game {
-    var playerCount = 3
-    var bossCardCount = 3
+    var playerCount: Int? 
+    var bossCardCount: Int?
     var deck: [Card] = []
     var players: [Player] = []
     var userIsBoss = true
@@ -17,7 +17,9 @@ final class Game {
             if let input = readLine(), let p = Int(input) {
                 playerCount = p
                 if p > 3 {
-                    bossCards = 5
+                    bossCardCount = 5
+                } else {
+                    bossCardCount = 3
                 }
             }
         }
@@ -25,9 +27,9 @@ final class Game {
         if !userIsBoss {
             if let input = readLine()?.lowercased() {
                 if input == "y" {
-                    userIsBoss == true
+                    userIsBoss = true
                 } else if input == "n" {
-                    userIsBoss == false
+                    userIsBoss = false
                 } else {
                     print("Type something else")
                 }
@@ -53,11 +55,11 @@ final class Game {
     func createPlayerDecks() {
 
         var playerNames = ["user"]
-        for i in 0..<playerCount-1 {
+        for i in 0..<playerCount!-1 {
             playerNames.append("bot" + String(i + 1))
         }
 
-        for i in 0..<playerCount {
+        for i in 0..<playerCount! {
             let newPlayer = Player(name: playerNames[i], deck: []) 
             players.append(newPlayer)
         }
@@ -66,17 +68,32 @@ final class Game {
 
         var playerIndex = 0
 
-        for cardIndex in 0..<deck.count - bossCardCount {
-            players[playerIndex].deck.append(deck[cardIndex])
-            deck.removeFirst()
-            if playerIndex == players.count - 1 {
-                playerIndex = 0
-            } else {
-                playerIndex += 1
+        // distribute cards to player decks except boss cards
+
+        while deck.count > bossCardCount! {
+            if let card = deck.popLast() {
+                players[playerIndex].deck.append(card)
             }
+            playerIndex += 1
         }
-        for card in deck {
-            
+
+        // add the rest of the cards to the boss.
+        var bossIndex: Int;
+        if userIsBoss {
+            bossIndex = 0
+        } else {
+            bossIndex = Int.random(in:1...players.count - 1) 
+        }
+
+        for cardInd in 0..<deck.count {
+            players[bossIndex].deck.append(deck[cardInd])
+        }
+
+        // print final summary of cards
+
+        for player in players {
+            let formatted = "\(player.name): \(player.deck)"
+            print(formatted)
         }
 
     }
