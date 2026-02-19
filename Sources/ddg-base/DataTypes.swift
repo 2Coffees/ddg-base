@@ -1,9 +1,5 @@
 import Foundation
 
-protocol Player {
-    
-}
-
 enum Suit: String, CaseIterable {
     case spades = "♠️", hearts = "♥️", diamonds = "♦️", clubs = "♣️"
 }
